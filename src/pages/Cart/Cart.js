@@ -4,7 +4,7 @@ import CartItems from "./CartItems";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
-  const [checkAll, setCheckAll] = useState(false);
+  //const [checkAll, setCheckAll] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0); // State to track total price
 
   // const handleCheck = () => {
@@ -50,7 +50,7 @@ export default function Cart() {
     }, 0);
 
     setTotalPrice(total);
-  }, [cartItems, checkAll]); // Update total whenever cartItems or checkAll changes
+  }, [cartItems]); // Update total whenever cartItems or checkAll changes
 
   return (
     <div className="p-4 mt-10 lg:mt-20 xl:w-[60%] md:w-[80%] w-full m-auto max-w-[1500px] overflow-x-auto flex flex-col gap-6">
