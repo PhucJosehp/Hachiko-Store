@@ -22,7 +22,6 @@ export default function Navbar() {
   const navbarTabs = [
     { name: "Home", link: "/", hasSubTabs: false },
     { name: "Category", link: null, hasSubTabs: true },
-    { name: "Contact", link: "/Contact", hasSubTabs: false },
   ];
 
   useEffect(() => {
@@ -102,7 +101,7 @@ export default function Navbar() {
 
   return (
     <div
-      className="navbar sticky top-0 z-10 bg-[#DDD0C8] flex justify-between px-10"
+      className="navbar sticky top-0 z-10 bg-[#DDD0C8] flex justify-between px-10 min-w-[1100px]"
       ref={navRef}
     >
       <NavLink to="/" className="flex-none">

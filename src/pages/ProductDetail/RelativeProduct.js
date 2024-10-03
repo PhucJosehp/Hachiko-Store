@@ -16,7 +16,6 @@ export default function RelativeProduct() {
         const relativeProducts = res.data.filter(
           (product) => product.id !== id
         );
-        console.log(category);
         setProduct(relativeProducts);
       })
       .then();

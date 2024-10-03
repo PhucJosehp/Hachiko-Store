@@ -1,61 +1,81 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { motion, useMotionValue } from "framer-motion";
+
+const imgs = ["./carou2.jpg", "./carou3.jpg", "./carou4.jpg", "./carou5.jpg"];
+
+const ONE_SECOND = 1000;
+const AUTO_DELAY = ONE_SECOND * 5;
+
+const SPRING_OPTIONS = {
+  type: "spring",
+  mass: 3,
+  stiffness: 400,
+  damping: 50,
+};
 
 export default function Carousel() {
-  const [currentSlide, setCurrentSlide] = useState(1);
-  const totalSlides = 4;
-
-  const listImageCarousel = [
-    { imgLink: "./carou2.jpg" },
-    { imgLink: "./carou3.jpg" },
-    { imgLink: "./carou4.jpg" },
-    { imgLink: "./carou5.jpg" },
-  ];
-
-  function handleNext() {
-    setCurrentSlide((prev) => (prev % totalSlides) + 1);
-  }
-
-  function handlePrev() {
-    setCurrentSlide((prev) => (prev - 1 === 0 ? totalSlides : prev - 1));
-  }
+  const [imgIndex, setImgIndex] = useState(0);
+  const dragX = useMotionValue(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 5000);
-    return () => clearInterval(interval);
+    const intervalRef = setInterval(() => {
+      setImgIndex((prevIndex) => (prevIndex + 1) % imgs.length);
+    }, AUTO_DELAY);
+
+    return () => clearInterval(intervalRef);
   }, []);
 
+  const onDragEnd = () => {
+    const x = dragX.get();
+
+    if (x <= -50 && imgIndex < imgs.length - 1) {
+      setImgIndex((prev) => prev + 1);
+    } else if (x >= 50 && imgIndex > 0) {
+      setImgIndex((prev) => prev - 1);
+    }
+  };
+
   return (
-    <div className="carousel w-full ">
-      {listImageCarousel.map(({ imgLink }, index) => (
-        <div
-          key={index}
-          className={`carousel-item relative w-full bg-[--secondary] transition-opacity duration-1000 ease-in-out ${
-            currentSlide === index + 1 ? "block" : "hidden"
-          }`}
-        >
-          <img
-            src={imgLink}
-            className="w-[80%] h-auto object-cover aspect-video object-center m-auto"
+    <div className="relative overflow-hidden h-screen">
+      <motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        style={{ x: dragX }}
+        animate={{ translateX: `-${imgIndex * 100}%` }}
+        transition={SPRING_OPTIONS}
+        onDragEnd={onDragEnd}
+        className="flex h-[85%]"
+      >
+        {imgs.map((imgSrc, index) => (
+          <motion.div
+            key={index}
+            style={{
+              backgroundImage: `url(${imgSrc})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            className="aspect-auto h-full w-full shrink-0"
           />
-          <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-            <button
-              onClick={handlePrev}
-              className="btn btn-circle bg-transparent border-0"
-            >
-              ❮
-            </button>
-            <button
-              onClick={handleNext}
-              className="btn btn-circle bg-transparent border-0"
-            >
-              ❯
-            </button>
-          </div>
-        </div>
-      ))}
+        ))}
+      </motion.div>
+
+      <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} />
     </div>
   );
 }
+
+const Dots = ({ imgIndex, setImgIndex }) => {
+  return (
+    <div className="mt-6 flex w-full justify-center gap-2">
+      {imgs.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={() => setImgIndex(idx)}
+          className={`h-3 w-3 rounded-full transition-colors ${
+            idx === imgIndex ? "bg-[--primary]" : "bg-[--secondary]"
+          }`}
+        />
+      ))}
+    </div>
+  );
+};

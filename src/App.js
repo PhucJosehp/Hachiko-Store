@@ -8,6 +8,7 @@ import CustomToaster from "./components/CustomToast";
 import Cart from "./pages/Cart/Cart";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
       <Routes>
         <Route
           element={
-            <div className="w-full h-full min-h-screen bg-[#f5f5f5]">
+            <div className="w-full h-full min-h-screen bg-[#f5f5f5] min-w-[1100px]">
               <Navbar />
               <CustomToaster />
               <Outlet />
+              <Footer />
             </div>
           }
         >
