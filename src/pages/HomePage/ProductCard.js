@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { NavLink } from "react-router-dom";
 import { addToCart } from "../../lib/cartSlice";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 
-export default function ProductCard({ product }) {
+function ProductCard({ product }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const quantity = 1;
@@ -96,3 +96,5 @@ export default function ProductCard({ product }) {
     </div>
   );
 }
+
+export default memo(ProductCard);

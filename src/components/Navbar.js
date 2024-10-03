@@ -113,7 +113,7 @@ export default function Navbar() {
           <NavLink to="/cart" className="relative p-1">
             <ShoppingCartIcon className="hover:cursor-pointer size-7 text-[#131313] mr-2 mt-1" />
             {cartQuantity > 0 && (
-              <div className="absolute top-0 right-0 badge badge-primary badge-sm text-sm font-semibold">
+              <div className="absolute top-0 right-0 badge badge-primary bg-[#00cdb8] badge-sm text-sm font-semibold">
                 {cartQuantity}
               </div>
             )}
@@ -144,7 +144,7 @@ export default function Navbar() {
           <NavLink to="/cart" className="relative p-1">
             <ShoppingCartIcon className="hover:cursor-pointer size-7 text-[#131313] mr-2 mt-1" />
             {cartQuantity > 0 && (
-              <div className="absolute top-0 right-0 badge badge-primary badge-sm text-sm font-semibold">
+              <div className="absolute top-0 right-0 badge badge-primary bg-[#00cdb8] badge-sm text-sm font-semibold">
                 {cartQuantity}
               </div>
             )}

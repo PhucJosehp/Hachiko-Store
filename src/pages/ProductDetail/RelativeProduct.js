@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
-export default function RelativeProduct() {
+function RelativeProduct() {
   const [product, setProduct] = useState([]);
   const location = useLocation();
   const category = location.pathname.split("/")[2];
@@ -50,3 +50,5 @@ export default function RelativeProduct() {
     </div>
   );
 }
+
+export default memo(RelativeProduct);

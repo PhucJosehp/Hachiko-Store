@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { PlusIcon, MinusIcon } from "@heroicons/react/16/solid";
 import CancleDialog from "../../components/CancleDialog";
 
-export default function CartItems({
-  item,
-  onQuantityChange,
-  cartItems,
-  setCartItems,
-}) {
+function CartItems({ item, onQuantityChange, cartItems, setCartItems }) {
   const [quantity, setQuantity] = useState(item.quantity);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -108,3 +103,5 @@ export default function CartItems({
     )
   );
 }
+
+export default memo(CartItems);
