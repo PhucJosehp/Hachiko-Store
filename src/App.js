@@ -1,14 +1,17 @@
 import "./assets/App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
 
-import HomePage from "./pages/HomePage/HomePage";
-import Category from "./pages/Category/Category";
-import ProductDetail from "./pages/ProductDetail/ProductDetail";
-import CustomToaster from "./components/CustomToast";
-import Cart from "./pages/Cart/Cart";
-
+import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
+import CustomToaster from "./components/CustomToast";
+
+const Category = lazy(() => import("./pages/Category/Category"));
+const LazyHomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const LazyCart = lazy(() => import("./pages/Cart/Cart"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail/ProductDetail"));
 
 function App() {
   return (
@@ -24,10 +27,38 @@ function App() {
             </div>
           }
         >
-          <Route path="/" element={<HomePage />} />
-          <Route path="/category/:id" element={<Category />} />
-          <Route path="category/:id/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loading />}>
+                <LazyHomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/category/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Category />
+              </Suspense>
+            }
+          />
+          <Route
+            path="category/:id/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ProductDetail />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <Suspense fallback={<Loading />}>
+                <LazyCart />
+              </Suspense>
+            }
+          />
         </Route>
       </Routes>
     </>
